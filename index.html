@@ -2,228 +2,549 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMPERIAL</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<title>IMPERIAL | Gaming</title>
 
-        body {
-            background: #101114;
-            color: white;
-            font-family: Arial, sans-serif;
-            min-height: 100vh;
-        }
+<style>
 
-        /* Header */
-        header {
-            padding: 25px 40px;
-            border-bottom: 1px solid #292929;
-        }
+/* GLOBAL */
 
-        header h1 {
-            font-size: 26px;
-            letter-spacing: 5px;
-            color: #d6b46a;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        /* Main layout */
-        main {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 80vh;
-            padding: 20px;
-        }
+body {
+    min-height: 100vh;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background:
+        radial-gradient(ellipse at 50% 0%, #172c50 0%, transparent 50%),
+        #080d18;
+    color: #ffffff;
+}
 
-        /* Game window */
-        .game-window {
-            width: 600px;
-            max-width: 100%;
-            background: #191a20;
-            border: 1px solid #353535;
-            border-radius: 12px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        }
+/* NAVBAR */
 
-        .game-window h2 {
-            color: #d6b46a;
-            margin-bottom: 10px;
-        }
+header {
+    height: 85px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7%;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    background: rgba(8,13,24,0.75);
+    backdrop-filter: blur(15px);
+}
 
-        .game-window p {
-            color: #aaa;
-            margin-bottom: 20px;
-        }
+.logo {
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: 5px;
+    color: white;
+}
 
-        /* Game area */
-        #game-area {
-            height: 300px;
-            background: #101114;
-            border: 1px solid #333;
-            border-radius: 8px;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
+.logo span {
+    color: #5794ff;
+}
 
-        #target {
-            width: 35px;
-            height: 35px;
-            background: #d6b46a;
-            border-radius: 50%;
-            position: absolute;
-            display: none;
-            cursor: pointer;
-            box-shadow: 0 0 15px #d6b46a;
-        }
+nav {
+    display: flex;
+    gap: 30px;
+}
 
-        /* Stats */
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-        }
+nav a {
+    color: #8e9bb1;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
 
-        .stats div {
-            color: #d6b46a;
-            font-size: 18px;
-        }
+nav a:hover {
+    color: white;
+}
 
-        /* Button */
-        button {
-            background: #d6b46a;
-            color: #101114;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.status {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #9baac0;
+    font-size: 12px;
+}
 
-        button:hover {
-            background: #f0d18b;
-        }
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #36d69a;
+    box-shadow: 0 0 10px #36d69a;
+}
 
-        footer {
-            text-align: center;
-            color: #555;
-            padding: 20px;
-            font-size: 12px;
-            letter-spacing: 2px;
-        }
-    </style>
+/* MAIN */
+
+main {
+    min-height: calc(100vh - 145px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 850px;
+}
+
+/* INTRO */
+
+.intro {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.tag {
+    display: inline-block;
+    padding: 7px 14px;
+    border: 1px solid rgba(87,148,255,0.25);
+    background: rgba(87,148,255,0.08);
+    border-radius: 30px;
+    color: #70a6ff;
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+}
+
+.intro h1 {
+    font-size: clamp(30px, 5vw, 46px);
+    font-weight: 750;
+    letter-spacing: -1.5px;
+    margin-bottom: 12px;
+}
+
+.intro p {
+    color: #8290a7;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+/* GAME CARD */
+
+.game-card {
+    padding: 30px;
+    background: rgba(19,29,47,0.85);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 20px;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.35);
+    backdrop-filter: blur(20px);
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.game-header h2 {
+    font-size: 17px;
+    font-weight: 650;
+}
+
+.difficulty {
+    padding: 6px 12px;
+    background: rgba(255,83,104,0.1);
+    color: #ff7185;
+    border-radius: 20px;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+/* STATS */
+
+.stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.stat-box {
+    background: rgba(255,255,255,0.035);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.stat-label {
+    color: #8290a7;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+/* GAME AREA */
+
+#game-area {
+    height: 330px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid rgba(87,148,255,0.17);
+    background:
+        radial-gradient(circle at center, rgba(35,69,120,0.18), transparent 70%),
+        #0b1322;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 35px 35px;
+}
+
+#target {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    display: none;
+    border-radius: 50%;
+    cursor: pointer;
+    background: #5794ff;
+    border: 3px solid #a8caff;
+    box-shadow:
+        0 0 12px #5794ff,
+        0 0 30px rgba(87,148,255,0.6);
+    transition: left 0.12s ease, top 0.12s ease;
+}
+
+#target:hover {
+    transform: scale(1.15);
+}
+
+/* CONTROLS */
+
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 22px;
+    gap: 15px;
+}
+
+#message {
+    color: #8997ad;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+button {
+    border: none;
+    background: linear-gradient(135deg, #5794ff, #3676e8);
+    color: white;
+    padding: 14px 27px;
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(57,117,232,0.25);
+    transition: 0.25s;
+    white-space: nowrap;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(57,117,232,0.4);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* FOOTER */
+
+footer {
+    padding: 25px;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    color: #526078;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 0 20px;
+        height: 70px;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .game-card {
+        padding: 20px;
+    }
+
+    #game-area {
+        height: 280px;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    #message {
+        text-align: center;
+    }
+}
+
+</style>
 </head>
 
 <body>
 
-    <header>
-        <h1>IMPERIAL</h1>
-    </header>
+<!-- NAVIGATION -->
 
-    <main>
-        <div class="game-window">
+<header>
 
-            <h2>REACTION CHALLENGE</h2>
-            <p>Click the golden target as many times as possible!</p>
+    <div class="logo">
+        IMPERIAL<span>.</span>
+    </div>
 
-            <div class="stats">
-                <div>Score: <span id="score">0</span></div>
-                <div>Time: <span id="time">30</span>s</div>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#game">Play</a>
+        <a href="#about">About</a>
+    </nav>
+
+    <div class="status">
+        <div class="status-dot"></div>
+        SYSTEM ONLINE
+    </div>
+
+</header>
+
+
+<!-- MAIN CONTENT -->
+
+<main>
+
+<div class="container">
+
+    <div class="intro">
+
+        <div class="tag">IMPERIAL GAMING</div>
+
+        <h1>Test Your <span style="color:#5794ff;">Reflexes.</span></h1>
+
+        <p>
+            Think fast. Move faster. See how high you can score.
+        </p>
+
+    </div>
+
+
+    <!-- GAME -->
+
+    <div class="game-card" id="game">
+
+        <div class="game-header">
+
+            <h2>Reaction Challenge</h2>
+
+            <div class="difficulty">
+                HARD MODE
             </div>
 
-            <div id="game-area">
-                <div id="target"></div>
+        </div>
+
+
+        <!-- SCORE -->
+
+        <div class="stats">
+
+            <div class="stat-box">
+
+                <div class="stat-label">Your Score</div>
+
+                <div class="stat-value" id="score">
+                    0
+                </div>
+
             </div>
 
-            <button id="start-button" onclick="startGame()">
-                START GAME
-            </button>
+            <div class="stat-box">
 
-            <p id="message" style="margin-top:20px;">
+                <div class="stat-label">Time Remaining</div>
+
+                <div class="stat-value">
+                    <span id="time">30</span>
+                    <span style="font-size:14px;color:#8290a7;">SEC</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PLAYING AREA -->
+
+        <div id="game-area">
+
+            <div id="target"></div>
+
+        </div>
+
+
+        <!-- BUTTONS -->
+
+        <div class="controls">
+
+            <p id="message">
                 Press start when you're ready.
             </p>
 
+            <button id="start-button" onclick="startGame()">
+                START GAME →
+            </button>
+
         </div>
-    </main>
 
-    <footer>
-        IMPERIAL © 2026
-    </footer>
+    </div>
 
-    <script>
-        let score = 0;
-        let timeLeft = 30;
-        let timer;
-        let playing = false;
+</div>
 
-        const target = document.getElementById("target");
-        const area = document.getElementById("game-area");
+</main>
 
-        function moveTarget() {
-            const maxX = area.clientWidth - target.offsetWidth;
-            const maxY = area.clientHeight - target.offsetHeight;
 
-            target.style.left = Math.random() * maxX + "px";
-            target.style.top = Math.random() * maxY + "px";
-        }
+<!-- FOOTER -->
 
-        function startGame() {
-            if (playing) return;
+<footer id="about">
+    © 2026 IMPERIAL — ALL RIGHTS RESERVED
+</footer>
 
-            score = 0;
-            timeLeft = 30;
-            playing = true;
 
-            document.getElementById("score").textContent = score;
-            document.getElementById("time").textContent = timeLeft;
-            document.getElementById("message").textContent = "Click the target!";
-            document.getElementById("start-button").textContent = "PLAYING...";
+<!-- GAME SCRIPT -->
 
-            target.style.display = "block";
+<script>
+
+let score = 0;
+let timeLeft = 30;
+let timer;
+let movementTimer;
+let playing = false;
+
+const target = document.getElementById("target");
+const area = document.getElementById("game-area");
+
+function moveTarget() {
+
+    const maxX = area.clientWidth - target.offsetWidth;
+    const maxY = area.clientHeight - target.offsetHeight;
+
+    target.style.left = Math.random() * maxX + "px";
+    target.style.top = Math.random() * maxY + "px";
+
+}
+
+function startGame() {
+
+    if (playing) return;
+
+    score = 0;
+    timeLeft = 30;
+    playing = true;
+
+    document.getElementById("score").textContent = score;
+    document.getElementById("time").textContent = timeLeft;
+
+    document.getElementById("message").textContent =
+        "Quick! Click the target before it moves!";
+
+    document.getElementById("start-button").textContent =
+        "PLAYING...";
+
+    target.style.display = "block";
+
+    moveTarget();
+
+    // Target moves every 0.8 seconds
+
+    movementTimer = setInterval(function() {
+
+        if (playing) {
             moveTarget();
-
-            timer = setInterval(function() {
-                timeLeft--;
-                document.getElementById("time").textContent = timeLeft;
-
-                if (timeLeft <= 0) {
-                    endGame();
-                }
-            }, 1000);
         }
 
-        target.addEventListener("click", function() {
-            if (!playing) return;
+    }, 800);
 
-            score++;
-            document.getElementById("score").textContent = score;
 
-            moveTarget();
-        });
+    // Countdown
 
-        function endGame() {
-            clearInterval(timer);
-            playing = false;
+    timer = setInterval(function() {
 
-            target.style.display = "none";
+        timeLeft--;
 
-            document.getElementById("message").textContent =
-                "Game over! Your final score was " + score + ".";
+        document.getElementById("time").textContent = timeLeft;
 
-            document.getElementById("start-button").textContent =
-                "PLAY AGAIN";
+        if (timeLeft <= 0) {
+            endGame();
         }
-    </script>
+
+    }, 1000);
+
+}
+
+
+// Target clicked
+
+target.addEventListener("click", function() {
+
+    if (!playing) return;
+
+    score++;
+
+    document.getElementById("score").textContent = score;
+
+    moveTarget();
+
+});
+
+
+// End game
+
+function endGame() {
+
+    clearInterval(timer);
+    clearInterval(movementTimer);
+
+    playing = false;
+
+    target.style.display = "none";
+
+    document.getElementById("message").textContent =
+        "Time's up! Your final score: " + score;
+
+    document.getElementById("start-button").textContent =
+        "PLAY AGAIN →";
+
+}
+
+</script>
 
 </body>
 </html>
-
