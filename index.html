@@ -1,550 +1,199 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>IMPERIAL | Gaming</title>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IMPERIAL BlackJack</title>
 <style>
-
-/* GLOBAL */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    min-height: 100vh;
-    font-family: 'Inter', 'Segoe UI', sans-serif;
-    background:
-        radial-gradient(ellipse at 50% 0%, #172c50 0%, transparent 50%),
-        #080d18;
-    color: #ffffff;
-}
-
-/* NAVBAR */
-
-header {
-    height: 85px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 7%;
-    border-bottom: 1px solid rgba(255,255,255,0.07);
-    background: rgba(8,13,24,0.75);
-    backdrop-filter: blur(15px);
-}
-
-.logo {
-    font-size: 25px;
-    font-weight: 800;
-    letter-spacing: 5px;
-    color: white;
-}
-
-.logo span {
-    color: #5794ff;
-}
-
-nav {
-    display: flex;
-    gap: 30px;
-}
-
-nav a {
-    color: #8e9bb1;
-    text-decoration: none;
-    font-size: 14px;
-    transition: 0.3s;
-}
-
-nav a:hover {
-    color: white;
-}
-
-.status {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    color: #9baac0;
-    font-size: 12px;
-}
-
-.status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #36d69a;
-    box-shadow: 0 0 10px #36d69a;
-}
-
-/* MAIN */
-
-main {
-    min-height: calc(100vh - 145px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 20px;
-}
-
-.container {
-    width: 100%;
-    max-width: 850px;
-}
-
-/* INTRO */
-
-.intro {
-    text-align: center;
-    margin-bottom: 35px;
-}
-
-.tag {
-    display: inline-block;
-    padding: 7px 14px;
-    border: 1px solid rgba(87,148,255,0.25);
-    background: rgba(87,148,255,0.08);
-    border-radius: 30px;
-    color: #70a6ff;
-    font-size: 11px;
-    letter-spacing: 2px;
-    margin-bottom: 18px;
-}
-
-.intro h1 {
-    font-size: clamp(30px, 5vw, 46px);
-    font-weight: 750;
-    letter-spacing: -1.5px;
-    margin-bottom: 12px;
-}
-
-.intro p {
-    color: #8290a7;
-    font-size: 15px;
-    line-height: 1.6;
-}
-
-/* GAME CARD */
-
-.game-card {
-    padding: 30px;
-    background: rgba(19,29,47,0.85);
-    border: 1px solid rgba(255,255,255,0.09);
-    border-radius: 20px;
-    box-shadow: 0 25px 80px rgba(0,0,0,0.35);
-    backdrop-filter: blur(20px);
-}
-
-.game-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-}
-
-.game-header h2 {
-    font-size: 17px;
-    font-weight: 650;
-}
-
-.difficulty {
-    padding: 6px 12px;
-    background: rgba(255,83,104,0.1);
-    color: #ff7185;
-    border-radius: 20px;
-    font-size: 11px;
-    letter-spacing: 1px;
-}
-
-/* STATS */
-
-.stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-bottom: 22px;
-}
-
-.stat-box {
-    background: rgba(255,255,255,0.035);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 12px;
-    padding: 16px;
-}
-
-.stat-label {
-    color: #8290a7;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 8px;
-}
-
-.stat-value {
-    font-size: 28px;
-    font-weight: 700;
-}
-
-/* GAME AREA */
-
-#game-area {
-    height: 330px;
-    position: relative;
-    overflow: hidden;
-    border-radius: 14px;
-    border: 1px solid rgba(87,148,255,0.17);
-    background:
-        radial-gradient(circle at center, rgba(35,69,120,0.18), transparent 70%),
-        #0b1322;
-    background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-    background-size: 35px 35px;
-}
-
-#target {
-    width: 32px;
-    height: 32px;
-    position: absolute;
-    display: none;
-    border-radius: 50%;
-    cursor: pointer;
-    background: #5794ff;
-    border: 3px solid #a8caff;
-    box-shadow:
-        0 0 12px #5794ff,
-        0 0 30px rgba(87,148,255,0.6);
-    transition: left 0.12s ease, top 0.12s ease;
-}
-
-#target:hover {
-    transform: scale(1.15);
-}
-
-/* CONTROLS */
-
-.controls {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 22px;
-    gap: 15px;
-}
-
-#message {
-    color: #8997ad;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-button {
-    border: none;
-    background: linear-gradient(135deg, #5794ff, #3676e8);
-    color: white;
-    padding: 14px 27px;
-    border-radius: 9px;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: 1px;
-    cursor: pointer;
-    box-shadow: 0 5px 20px rgba(57,117,232,0.25);
-    transition: 0.25s;
-    white-space: nowrap;
-}
-
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(57,117,232,0.4);
-}
-
-button:active {
-    transform: scale(0.97);
-}
-
-/* FOOTER */
-
-footer {
-    padding: 25px;
-    text-align: center;
-    border-top: 1px solid rgba(255,255,255,0.06);
-    color: #526078;
-    font-size: 11px;
-    letter-spacing: 2px;
-}
-
-/* MOBILE */
-
-@media (max-width: 600px) {
-
-    header {
-        padding: 0 20px;
-        height: 70px;
-    }
-
-    nav {
-        display: none;
-    }
-
-    .game-card {
-        padding: 20px;
-    }
-
-    #game-area {
-        height: 280px;
-    }
-
-    .controls {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    button {
-        width: 100%;
-    }
-
-    #message {
-        text-align: center;
-    }
-}
-
+:root{--bg:#f3efe4;--ink:#1d1a14;--felt:#0e5a3a;--felt2:#0a4129;--gold:#a8791a;--gold2:#d9a935;--panel:#fffaf0;--line:#d8cfb8;--mute:#6b6350;--red:#c0262d;--card:#fffdf8;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0b0d0c;--ink:#f1ead6;--felt:#0e5a3a;--felt2:#093a25;--gold:#d9a935;--gold2:#f3cf6b;--panel:#161a18;--line:#2b322e;--mute:#9aa39d;--red:#ff6b6b;--card:#fffdf8}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0b0d0c;--ink:#f1ead6;--felt:#0e5a3a;--felt2:#093a25;--gold:#d9a935;--gold2:#f3cf6b;--panel:#161a18;--line:#2b322e;--mute:#9aa39d;--red:#ff6b6b;--card:#fffdf8}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif;min-height:100vh}
+.wrap{max-width:980px;margin:0 auto;padding:16px}
+header{display:flex;align-items:center;gap:14px;justify-content:center;padding:8px 0 16px}
+header svg{width:64px;height:64px;flex:none}
+h1{margin:0;font-size:clamp(26px,6vw,44px);letter-spacing:.14em;color:var(--gold);line-height:1}
+h1 small{display:block;font-size:.34em;letter-spacing:.5em;color:var(--mute);margin-top:6px;font-weight:400}
+.grid{display:grid;grid-template-columns:1fr 280px;gap:16px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px}
+.bar label{font-size:12px;color:var(--mute);display:block;text-transform:uppercase;letter-spacing:.1em}
+.bar input{font:inherit;background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 10px;width:150px}
+.bal{font-size:26px;color:var(--gold);font-variant-numeric:tabular-nums}
+.table{position:relative;overflow:hidden;color:#f1ead6;min-height:560px;padding:22px 16px 40px;border:16px solid #4a2a14;border-radius:26px 26px 50% 50%/26px 26px 26% 26%;background:repeating-linear-gradient(45deg,#ffffff07 0 2px,transparent 2px 4px),radial-gradient(ellipse at 50% 25%,#18804f 0%,#0e5a3a 55%,#073220 100%);box-shadow:inset 0 0 0 3px var(--gold),inset 0 0 70px #000b,0 0 0 3px #26140a,0 16px 34px #0009}
+.shoe{position:absolute;top:10px;right:14px;width:74px;height:46px;border-radius:6px 6px 14px 6px;background:linear-gradient(135deg,#222,#050505);border:2px solid #555;box-shadow:0 4px 8px #000a}
+.shoe:after{content:"";position:absolute;left:6px;right:-4px;top:8px;height:30px;background:repeating-linear-gradient(90deg,#fffdf8 0 3px,#d5d0c4 3px 4px);border-radius:3px}
+.arc{width:100%;max-width:520px;display:block;margin:0 auto;overflow:visible}
+.spot{width:84px;height:84px;margin:10px auto 0;border-radius:50%;border:2px solid #e8c766aa;box-shadow:inset 0 0 12px #0008;display:flex;align-items:center;justify-content:center;color:#e8c766;font-size:15px;letter-spacing:.05em}
+.stakes .chip{width:62px;height:62px;min-width:0;padding:0;border-radius:50%;border:4px dashed #ffffffcc;font-weight:700;font-size:15px;box-shadow:0 4px 0 #0007,inset 0 0 0 3px #0003;transition:transform .15s}
+.stakes .chip.on{transform:translateY(-8px);box-shadow:0 0 0 3px var(--gold2),0 10px 12px #000a}
+.c10{background:#efefef;color:#222}.c50{background:#c0262d;color:#fff}.c100{background:#1f5fbf;color:#fff}.c200{background:#2e8b57;color:#fff}.c500{background:#202020;color:#fff}.c1000{background:#6a2c91;color:#fff}
+.stakes{gap:10px}
+.zone h3{margin:0 0 6px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:400;display:flex;justify-content:space-between}
+.hand{display:flex;min-height:100px;padding-left:4px}
+.card{width:66px;height:96px;margin-left:-14px;background:var(--card);color:#1d1a14;border-radius:8px;border:1px solid #bbb;box-shadow:0 3px 8px #0006;padding:5px 6px;font-size:20px;font-weight:700;display:flex;flex-direction:column;justify-content:space-between;animation:deal .5s cubic-bezier(.2,.8,.25,1) both;position:relative}
+.card:first-child{margin-left:0}
+.card.red{color:#c0262d}
+.card .c{align-self:flex-end;transform:rotate(180deg)}
+.card.back{background:repeating-linear-gradient(45deg,#7a1a24 0 6px,#5a1018 6px 12px);border:3px solid #f1ead6;color:transparent}
+.card.flip{animation:flip .5s ease both}
+@keyframes deal{from{opacity:0;transform:translate(200px,-170px) rotate(25deg) scale(.6)}to{opacity:1;transform:none}}
+@keyframes flip{0%{transform:rotateY(90deg)}100%{transform:none}}
+.mid{text-align:center;padding:6px 0 0;min-height:70px}
+#msg{font-size:22px;min-height:30px}
+#msg.win{color:var(--gold2)}#msg.lose{color:#ff9a9a}
+.pot{font-size:14px;opacity:.85;margin-top:4px}
+.stakes,.acts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:12px}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--gold);background:transparent;color:var(--ink);padding:10px 16px;min-width:64px}
+.table button{color:#f1ead6}
+button.sel{background:var(--gold);color:#1d1a14!important;font-weight:700}
+button.main{background:linear-gradient(var(--gold2),var(--gold));color:#1d1a14!important;font-weight:700;border:0}
+button:disabled{opacity:.35;cursor:not-allowed}
+ol{margin:8px 0 0;padding-left:22px}
+li{padding:5px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+li span{float:right;color:var(--gold)}
+li.me{font-weight:700}
+.panel h2{margin:0;font-size:15px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold)}
+.note{font-size:12px;color:var(--mute);margin-top:10px}
+.reset{margin-top:12px;width:100%}
 </style>
 </head>
-
 <body>
-
-<!-- NAVIGATION -->
-
+<div class="wrap">
 <header>
-
-    <div class="logo">
-        IMPERIAL<span>.</span>
-    </div>
-
-    <nav>
-        <a href="#">Home</a>
-        <a href="#game">Play</a>
-        <a href="#about">About</a>
-    </nav>
-
-    <div class="status">
-        <div class="status-dot"></div>
-        SYSTEM ONLINE
-    </div>
-
+<svg viewBox="0 0 64 64" aria-label="Imperial crown logo"><circle cx="32" cy="32" r="29" fill="#0e5a3a" stroke="#d9a935" stroke-width="3"/><path d="M14 44 L12 22 L24 31 L32 16 L40 31 L52 22 L50 44 Z" fill="#d9a935" stroke="#f3cf6b" stroke-width="1.5" stroke-linejoin="round"/><rect x="14" y="46" width="36" height="5" rx="2" fill="#d9a935"/><circle cx="12" cy="21" r="3" fill="#f3cf6b"/><circle cx="32" cy="15" r="3" fill="#f3cf6b"/><circle cx="52" cy="21" r="3" fill="#f3cf6b"/></svg>
+<h1>IMPERIAL BlackJack<small>THE ROYAL TABLE</small></h1>
 </header>
-
-
-<!-- MAIN CONTENT -->
-
+<div class="grid">
 <main>
-
-<div class="container">
-
-    <div class="intro">
-
-        <div class="tag">IMPERIAL GAMING</div>
-
-        <h1>Test Your <span style="color:#5794ff;">Reflexes.</span></h1>
-
-        <p>
-            Think fast. Move faster. See how high you can score.
-        </p>
-
-    </div>
-
-
-    <!-- GAME -->
-
-    <div class="game-card" id="game">
-
-        <div class="game-header">
-
-            <h2>Reaction Challenge</h2>
-
-            <div class="difficulty">
-                HARD MODE
-            </div>
-
-        </div>
-
-
-        <!-- SCORE -->
-
-        <div class="stats">
-
-            <div class="stat-box">
-
-                <div class="stat-label">Your Score</div>
-
-                <div class="stat-value" id="score">
-                    0
-                </div>
-
-            </div>
-
-            <div class="stat-box">
-
-                <div class="stat-label">Time Remaining</div>
-
-                <div class="stat-value">
-                    <span id="time">30</span>
-                    <span style="font-size:14px;color:#8290a7;">SEC</span>
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- PLAYING AREA -->
-
-        <div id="game-area">
-
-            <div id="target"></div>
-
-        </div>
-
-
-        <!-- BUTTONS -->
-
-        <div class="controls">
-
-            <p id="message">
-                Press start when you're ready.
-            </p>
-
-            <button id="start-button" onclick="startGame()">
-                START GAME →
-            </button>
-
-        </div>
-
-    </div>
-
+<div class="panel bar">
+<div><label for="name">Player name</label><input id="name" maxlength="14" placeholder="Enter name"></div>
+<div><label>Bankroll</label><div class="bal" id="bank"></div></div>
+<div><label>Best</label><div class="bal" id="best" style="font-size:18px"></div></div>
 </div>
-
+<div class="table">
+<div class="shoe"></div>
+<div class="zone"><h3><span>Dealer</span><span id="dt"></span></h3><div class="hand" id="dealer"></div></div>
+<div class="mid"><svg class="arc" viewBox="0 0 600 130" role="img" aria-label="Blackjack pays 3 to 2. Dealer must hit on 16 and stand on 17."><defs><path id="a1" d="M30 28 Q300 98 570 28"/><path id="a2" d="M60 70 Q300 128 540 70"/></defs><text font-size="27" font-weight="700" letter-spacing="3" fill="#f3cf6b" text-anchor="middle"><textPath href="#a1" startOffset="50%">BLACKJACK PAYS 3 TO 2</textPath></text><text font-size="17" letter-spacing="2" fill="#f1ead6" text-anchor="middle"><textPath href="#a2" startOffset="50%">DEALER MUST HIT ON 16 · STAND ON 17</textPath></text></svg><div id="msg">Choose your stake and deal</div><div class="pot" id="pot"></div></div>
+<div class="zone"><h3><span>You</span><span id="pt"></span></h3><div class="hand" id="player"></div></div>
+<div class="spot" id="spot"></div>
+<div class="stakes" id="stakes"></div>
+<div class="acts">
+<button class="main" id="deal">Deal</button>
+<button id="hit">Hit</button><button id="stand">Stand</button><button id="dbl">Double Down</button>
+</div>
+</div>
+<button class="reset" id="reset">Reset &amp; start new £10 challenge</button>
 </main>
-
-
-<!-- FOOTER -->
-
-<footer id="about">
-    © 2026 IMPERIAL — ALL RIGHTS RESERVED
-</footer>
-
-
-<!-- GAME SCRIPT -->
-
+<aside class="panel">
+<h2>Leaderboard</h2>
+<ol id="lb"></ol>
+<div class="note">Ranked by highest bankroll reached. Blackjack pays 3:2, dealer stands on 17. Scores are saved in this browser.</div>
+</aside>
+</div>
+</div>
 <script>
-
-let score = 0;
-let timeLeft = 30;
-let timer;
-let movementTimer;
-let playing = false;
-
-const target = document.getElementById("target");
-const area = document.getElementById("game-area");
-
-function moveTarget() {
-
-    const maxX = area.clientWidth - target.offsetWidth;
-    const maxY = area.clientHeight - target.offsetHeight;
-
-    target.style.left = Math.random() * maxX + "px";
-    target.style.top = Math.random() * maxY + "px";
-
+const STAKES=[10,50,100,200,500,1000],START=1000,$=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const gbp=p=>'£'+(p/100).toFixed(2),lab=p=>p<100?p+'p':'£'+p/100;
+const KS='imperial-bj:save',KL='imperial-bj:lb';
+let S={name:'',bank:START,best:START,stake:100},LB={};
+try{Object.assign(S,JSON.parse(localStorage.getItem(KS)||'{}'));LB=JSON.parse(localStorage.getItem(KL)||'{}')}catch(e){}
+function save(){
+ const n=S.name.trim()||'Player';LB[n]=Math.max(LB[n]||0,S.best);
+ try{localStorage.setItem(KS,JSON.stringify(S));localStorage.setItem(KL,JSON.stringify(LB))}catch(e){}
 }
-
-function startGame() {
-
-    if (playing) return;
-
-    score = 0;
-    timeLeft = 30;
-    playing = true;
-
-    document.getElementById("score").textContent = score;
-    document.getElementById("time").textContent = timeLeft;
-
-    document.getElementById("message").textContent =
-        "Quick! Click the target before it moves!";
-
-    document.getElementById("start-button").textContent =
-        "PLAYING...";
-
-    target.style.display = "block";
-
-    moveTarget();
-
-    // Target moves every 0.8 seconds
-
-    movementTimer = setInterval(function() {
-
-        if (playing) {
-            moveTarget();
-        }
-
-    }, 800);
-
-
-    // Countdown
-
-    timer = setInterval(function() {
-
-        timeLeft--;
-
-        document.getElementById("time").textContent = timeLeft;
-
-        if (timeLeft <= 0) {
-            endGame();
-        }
-
-    }, 1000);
-
+let deck=[],P=[],D=[],bet=0,phase='bet',busy=false,hole=null,dealerHidden=false;
+function shuffle(){
+ deck=[];for(let d=0;d<6;d++)for(const s of '♠♥♦♣')for(const r of ['A','2','3','4','5','6','7','8','9','10','J','Q','K'])deck.push({r,s});
+ for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]]}
 }
-
-
-// Target clicked
-
-target.addEventListener("click", function() {
-
-    if (!playing) return;
-
-    score++;
-
-    document.getElementById("score").textContent = score;
-
-    moveTarget();
-
-});
-
-
-// End game
-
-function endGame() {
-
-    clearInterval(timer);
-    clearInterval(movementTimer);
-
-    playing = false;
-
-    target.style.display = "none";
-
-    document.getElementById("message").textContent =
-        "Time's up! Your final score: " + score;
-
-    document.getElementById("start-button").textContent =
-        "PLAY AGAIN →";
-
+function val(h){let t=0,a=0;for(const c of h){if(c.r==='A'){a++;t+=11}else t+=('KQJ'.includes(c.r)||c.r==='10')?10:+c.r}
+ while(t>21&&a){t-=10;a--}return t}
+function mk(c,back){
+ const e=document.createElement('div');
+ e.className='card'+(back?' back':'')+('♥♦'.includes(c.s)?' red':'');
+ e.innerHTML=`<div>${c.r}<br>${c.s}</div><div class="c">${c.r}<br>${c.s}</div>`;return e}
+async function give(arr,zone,back){
+ if(deck.length<20)shuffle();
+ const c=deck.pop();arr.push(c);const e=mk(c,back);$(zone).append(e);
+ if(back){hole=e;dealerHidden=true}
+ ui();await sleep(520)}
+function ui(){
+ const shown=bet&&phase!=='bet'?S.bank-bet:S.bank;
+ $('bank').textContent=gbp(shown);$('best').textContent=gbp(S.best);
+ $('pt').textContent=P.length?val(P):'';
+ $('dt').textContent=D.length?(dealerHidden?val([D[0]]):val(D)):'';
+ $('pot').textContent='';$('spot').textContent=gbp(phase==='play'?bet:S.stake);
+ const play=phase==='play'&&!busy;
+ $('hit').disabled=$('stand').disabled=!play;
+ $('dbl').disabled=!(play&&P.length===2&&S.bank>=bet*2);
+ $('deal').disabled=busy||phase==='play'||S.bank<S.stake;
+ $('stakes').innerHTML='';
+ for(const s of STAKES){const b=document.createElement('button');b.textContent=lab(s);
+  b.className='chip c'+s+(s===S.stake?' on':'');b.disabled=busy||phase==='play'||s>S.bank;
+  b.onclick=()=>{S.stake=s;save();ui()};$('stakes').append(b)}
+ board();
 }
-
+function board(){
+ const me=S.name.trim()||'Player';
+ const rows=Object.entries(LB).sort((a,b)=>b[1]-a[1]).slice(0,10);
+ $('lb').innerHTML=rows.map(([n,v])=>`<li class="${n===me?'me':''}">${n.replace(/[<>&]/g,'')}<span>${gbp(v)}</span></li>`).join('')||'<li>No scores yet</li>';
+}
+function say(t,c){const m=$('msg');m.textContent=t;m.className=c||''}
+async function deal(){
+ if(busy||phase==='play'||S.bank<S.stake)return;
+ busy=true;bet=S.stake;phase='play';P=[];D=[];$('player').innerHTML=$('dealer').innerHTML='';say('Dealing…');
+ await give(P,'player');await give(D,'dealer');await give(P,'player');await give(D,'dealer',true);
+ busy=false;say('Your move');ui();
+ if(val(P)===21||val(D)===21)await finish();
+}
+async function finish(){
+ busy=true;ui();
+ if(hole){hole.className=hole.className.replace('back','').trim()+' flip';dealerHidden=false;ui();await sleep(600)}
+ if(val(P)<=21&&!(P.length===2&&val(P)===21)){
+  while(val(D)<17){await give(D,'dealer')}
+ }
+ settle();
+}
+function settle(){
+ const pv=val(P),dv=val(D),pBJ=P.length===2&&pv===21,dBJ=D.length===2&&dv===21;
+ let d=0,t,c;
+ if(pv>21){d=-bet;t='Bust! You lose '+gbp(bet);c='lose'}
+ else if(pBJ&&!dBJ){d=Math.round(bet*1.5);t='BLACKJACK! You win '+gbp(d);c='win'}
+ else if(dBJ&&!pBJ){d=-bet;t='Dealer has blackjack';c='lose'}
+ else if(dv>21){d=bet;t='Dealer busts! You win '+gbp(bet);c='win'}
+ else if(pv>dv){d=bet;t='You win '+gbp(bet);c='win'}
+ else if(pv===dv){t='Push – bet returned'}
+ else{d=-bet;t='Dealer wins';c='lose'}
+ S.bank+=d;S.best=Math.max(S.best,S.bank);
+ if(!STAKES.some(s=>s<=S.bank)){t+=' — You are out of funds. Reset to try again.'}
+ else if(S.stake>S.bank)S.stake=[...STAKES].reverse().find(s=>s<=S.bank);
+ phase='bet';bet=0;busy=false;save();say(t,c);ui();
+}
+async function hit(){
+ if(phase!=='play'||busy)return;busy=true;ui();await give(P,'player');busy=false;
+ if(val(P)>=21)await finish();else ui();
+}
+async function dbl(){
+ if(phase!=='play'||busy||P.length!==2||S.bank<bet*2)return;
+ bet*=2;busy=true;ui();await give(P,'player');await finish();
+}
+$('deal').onclick=deal;$('hit').onclick=hit;$('stand').onclick=()=>{if(phase==='play'&&!busy)finish()};$('dbl').onclick=dbl;
+$('name').value=S.name;
+$('name').oninput=e=>{S.name=e.target.value;save();board()};
+let armed=false;
+$('reset').onclick=function(){
+ if(!armed){armed=true;this.textContent='Tap again to confirm new £10 challenge';setTimeout(()=>{armed=false;this.innerHTML='Reset &amp; start new £10 challenge'},3500);return}
+ armed=false;this.innerHTML='Reset &amp; start new £10 challenge';
+ S.bank=START;S.best=START;S.stake=100;phase='bet';bet=0;busy=false;P=[];D=[];dealerHidden=false;
+ $('player').innerHTML=$('dealer').innerHTML='';say('New £10 challenge started');save();ui();
+};
+shuffle();save();ui();
 </script>
-
 </body>
 </html>
