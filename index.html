@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Awesome Browser Game</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+        }
+        canvas {
+            border: 2px solid #ffffff;
+            background-color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to My Game!</h1>
+    <p>Hosted for free on GitHub Pages.</p>
+    
+    <!-- Game Canvas -->
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // Simple animation loop test
+        let x = 50;
+        function update() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#00ffcc";
+            ctx.fillRect(x, 180, 40, 40);
+            x = (x + 2) % canvas.width;
+            requestAnimationFrame(update);
+        }
+        update();
+    </script>
+</body>
+</html>
