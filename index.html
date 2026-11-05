@@ -1,1 +1,229 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMPERIAL</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #101114;
+            color: white;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            padding: 25px 40px;
+            border-bottom: 1px solid #292929;
+        }
+
+        header h1 {
+            font-size: 26px;
+            letter-spacing: 5px;
+            color: #d6b46a;
+        }
+
+        /* Main layout */
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            padding: 20px;
+        }
+
+        /* Game window */
+        .game-window {
+            width: 600px;
+            max-width: 100%;
+            background: #191a20;
+            border: 1px solid #353535;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .game-window h2 {
+            color: #d6b46a;
+            margin-bottom: 10px;
+        }
+
+        .game-window p {
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+
+        /* Game area */
+        #game-area {
+            height: 300px;
+            background: #101114;
+            border: 1px solid #333;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        #target {
+            width: 35px;
+            height: 35px;
+            background: #d6b46a;
+            border-radius: 50%;
+            position: absolute;
+            display: none;
+            cursor: pointer;
+            box-shadow: 0 0 15px #d6b46a;
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .stats div {
+            color: #d6b46a;
+            font-size: 18px;
+        }
+
+        /* Button */
+        button {
+            background: #d6b46a;
+            color: #101114;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #f0d18b;
+        }
+
+        footer {
+            text-align: center;
+            color: #555;
+            padding: 20px;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>IMPERIAL</h1>
+    </header>
+
+    <main>
+        <div class="game-window">
+
+            <h2>REACTION CHALLENGE</h2>
+            <p>Click the golden target as many times as possible!</p>
+
+            <div class="stats">
+                <div>Score: <span id="score">0</span></div>
+                <div>Time: <span id="time">30</span>s</div>
+            </div>
+
+            <div id="game-area">
+                <div id="target"></div>
+            </div>
+
+            <button id="start-button" onclick="startGame()">
+                START GAME
+            </button>
+
+            <p id="message" style="margin-top:20px;">
+                Press start when you're ready.
+            </p>
+
+        </div>
+    </main>
+
+    <footer>
+        IMPERIAL © 2026
+    </footer>
+
+    <script>
+        let score = 0;
+        let timeLeft = 30;
+        let timer;
+        let playing = false;
+
+        const target = document.getElementById("target");
+        const area = document.getElementById("game-area");
+
+        function moveTarget() {
+            const maxX = area.clientWidth - target.offsetWidth;
+            const maxY = area.clientHeight - target.offsetHeight;
+
+            target.style.left = Math.random() * maxX + "px";
+            target.style.top = Math.random() * maxY + "px";
+        }
+
+        function startGame() {
+            if (playing) return;
+
+            score = 0;
+            timeLeft = 30;
+            playing = true;
+
+            document.getElementById("score").textContent = score;
+            document.getElementById("time").textContent = timeLeft;
+            document.getElementById("message").textContent = "Click the target!";
+            document.getElementById("start-button").textContent = "PLAYING...";
+
+            target.style.display = "block";
+            moveTarget();
+
+            timer = setInterval(function() {
+                timeLeft--;
+                document.getElementById("time").textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        target.addEventListener("click", function() {
+            if (!playing) return;
+
+            score++;
+            document.getElementById("score").textContent = score;
+
+            moveTarget();
+        });
+
+        function endGame() {
+            clearInterval(timer);
+            playing = false;
+
+            target.style.display = "none";
+
+            document.getElementById("message").textContent =
+                "Game over! Your final score was " + score + ".";
+
+            document.getElementById("start-button").textContent =
+                "PLAY AGAIN";
+        }
+    </script>
+
+</body>
+</html>
+
