@@ -28,12 +28,27 @@ h1 small{display:block;font-size:.34em;letter-spacing:.5em;color:var(--mute);mar
 .shoe{position:absolute;top:10px;right:14px;width:74px;height:46px;border-radius:6px 6px 14px 6px;background:linear-gradient(135deg,#222,#050505);border:2px solid #555;box-shadow:0 4px 8px #000a}
 .shoe:after{content:"";position:absolute;left:6px;right:-4px;top:8px;height:30px;background:repeating-linear-gradient(90deg,#fffdf8 0 3px,#d5d0c4 3px 4px);border-radius:3px}
 .arc{width:100%;max-width:520px;display:block;margin:0 auto;overflow:visible}
-.spot{width:84px;height:84px;margin:10px auto 0;border-radius:50%;border:2px solid #e8c766aa;box-shadow:inset 0 0 12px #0008;display:flex;align-items:center;justify-content:center;color:#e8c766;font-size:15px;letter-spacing:.05em}
+.spot{width:136px;height:136px;margin:10px auto 0;border-radius:50%;border:3px dashed #e8c766aa;box-shadow:inset 0 0 14px #0008;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#e8c766;cursor:pointer;transition:.15s}
+.spot.over{border-color:#fff;background:#ffffff22;transform:scale(1.08)}
+.stk{position:relative;width:56px;height:56px}
+.mc{position:absolute;left:0;width:56px;height:56px;border-radius:50%;border:3px dashed #fffc;font:700 13px system-ui,Arial,sans-serif;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 0 #0008}
+.sv{font:700 15px system-ui,Arial,sans-serif;letter-spacing:.04em;text-align:center}
+.stakes .chip{display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.stakes .chip.off{opacity:.3;cursor:not-allowed}
+.ghost{position:fixed;z-index:99;pointer-events:none;width:62px;height:62px;border-radius:50%;border:4px dashed #ffffffcc;font:700 15px system-ui,Arial,sans-serif;display:flex;align-items:center;justify-content:center;box-shadow:0 14px 22px #000b;transform:scale(1.18)}
+.hint{text-align:center;font-size:14px;opacity:.85;margin-top:12px}
 .stakes .chip{width:62px;height:62px;min-width:0;padding:0;border-radius:50%;border:4px dashed #ffffffcc;font-weight:700;font-size:15px;box-shadow:0 4px 0 #0007,inset 0 0 0 3px #0003;transition:transform .15s}
 .stakes .chip.on{transform:translateY(-8px);box-shadow:0 0 0 3px var(--gold2),0 10px 12px #000a}
 .c10{background:#efefef;color:#222}.c50{background:#c0262d;color:#fff}.c100{background:#1f5fbf;color:#fff}.c200{background:#2e8b57;color:#fff}.c500{background:#202020;color:#fff}.c1000{background:#6a2c91;color:#fff}
 .stakes{gap:10px}
-.zone h3{margin:0 0 6px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:400;display:flex;justify-content:space-between}
+.zone h3{margin:0 0 6px;font-size:15px;letter-spacing:.2em;text-transform:uppercase;font-weight:400;display:flex;justify-content:flex-start;gap:14px;align-items:center}
+#pt,#dt{font:800 30px/1 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;letter-spacing:0;font-variant-numeric:tabular-nums;color:#fff;background:#000c;border:2px solid #f3cf6b;border-radius:999px;min-width:56px;padding:6px 14px;text-align:center;text-shadow:0 2px 3px #000}
+#pt:empty,#dt:empty{display:none}
+#pt.bust,#dt.bust{background:#b3202a;border-color:#fff}
+.slider{display:flex;align-items:center;gap:14px;justify-content:center;margin-top:16px}
+.slider input{flex:1;max-width:340px;height:32px;accent-color:#f3cf6b;cursor:pointer}
+.slider input:disabled{opacity:.35;cursor:not-allowed}
+.slider b{min-width:84px;text-align:left;font:700 22px system-ui,Arial,sans-serif;color:#f3cf6b;font-variant-numeric:tabular-nums}
 .hand{display:flex;min-height:100px;padding-left:4px}
 .card{width:66px;height:96px;margin-left:-14px;background:var(--card);color:#1d1a14;border-radius:8px;border:1px solid #bbb;box-shadow:0 3px 8px #0006;padding:5px 6px;font-size:20px;font-weight:700;display:flex;flex-direction:column;justify-content:space-between;animation:deal .5s cubic-bezier(.2,.8,.25,1) both;position:relative}
 .card:first-child{margin-left:0}
@@ -78,12 +93,13 @@ li.me{font-weight:700}
 <div class="table">
 <div class="shoe"></div>
 <div class="zone"><h3><span>Dealer</span><span id="dt"></span></h3><div class="hand" id="dealer"></div></div>
-<div class="mid"><svg class="arc" viewBox="0 0 600 130" role="img" aria-label="Blackjack pays 3 to 2. Dealer must hit on 16 and stand on 17."><defs><path id="a1" d="M30 28 Q300 98 570 28"/><path id="a2" d="M60 70 Q300 128 540 70"/></defs><text font-size="27" font-weight="700" letter-spacing="3" fill="#f3cf6b" text-anchor="middle"><textPath href="#a1" startOffset="50%">BLACKJACK PAYS 3 TO 2</textPath></text><text font-size="17" letter-spacing="2" fill="#f1ead6" text-anchor="middle"><textPath href="#a2" startOffset="50%">DEALER MUST HIT ON 16 · STAND ON 17</textPath></text></svg><div id="msg">Choose your stake and deal</div><div class="pot" id="pot"></div></div>
+<div class="mid"><svg class="arc" viewBox="0 0 600 130" role="img" aria-label="Blackjack pays 3 to 2. Dealer must hit on 16 and stand on 17."><defs><path id="a1" d="M30 28 Q300 98 570 28"/><path id="a2" d="M60 70 Q300 128 540 70"/></defs><text font-size="27" font-weight="700" letter-spacing="3" fill="#f3cf6b" text-anchor="middle"><textPath href="#a1" startOffset="50%">BLACKJACK PAYS 3 TO 2</textPath></text><text font-size="17" letter-spacing="2" fill="#f1ead6" text-anchor="middle"><textPath href="#a2" startOffset="50%">DEALER MUST HIT ON 16 · STAND ON 17</textPath></text></svg><div id="msg">Drag chips onto the circle, then deal</div><div class="pot" id="pot"></div></div>
 <div class="zone"><h3><span>You</span><span id="pt"></span></h3><div class="hand" id="player"></div></div>
-<div class="spot" id="spot"></div>
+<div class="spot" id="spot"><div class="stk" id="stk"></div><div class="sv" id="sv"></div></div>
 <div class="stakes" id="stakes"></div>
+<div class="hint">Drag chips from the rail onto the betting circle</div>
 <div class="acts">
-<button class="main" id="deal">Deal</button>
+<button class="main" id="deal">Deal</button><button id="clr">Clear Bet</button>
 <button id="hit">Hit</button><button id="stand">Stand</button><button id="dbl">Double Down</button>
 </div>
 </div>
@@ -101,7 +117,7 @@ const STAKES=[10,50,100,200,500,1000],START=1000,$=id=>document.getElementById(i
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const gbp=p=>'£'+(p/100).toFixed(2),lab=p=>p<100?p+'p':'£'+p/100;
 const KS='imperial-bj:save',KL='imperial-bj:lb';
-let S={name:'',bank:START,best:START,stake:100},LB={};
+let S={name:'',bank:START,best:START,stake:0},LB={};
 try{Object.assign(S,JSON.parse(localStorage.getItem(KS)||'{}'));LB=JSON.parse(localStorage.getItem(KL)||'{}')}catch(e){}
 function save(){
  const n=S.name.trim()||'Player';LB[n]=Math.max(LB[n]||0,S.best);
@@ -126,17 +142,24 @@ async function give(arr,zone,back){
 function ui(){
  const shown=bet&&phase!=='bet'?S.bank-bet:S.bank;
  $('bank').textContent=gbp(shown);$('best').textContent=gbp(S.best);
- $('pt').textContent=P.length?val(P):'';
- $('dt').textContent=D.length?(dealerHidden?val([D[0]]):val(D)):'';
- $('pot').textContent='';$('spot').textContent=gbp(phase==='play'?bet:S.stake);
+ $('pt').textContent=P.length?val(P):'';$('pt').className=val(P)>21?'bust':'';
+ $('dt').textContent=D.length?(dealerHidden?val([D[0]]):val(D)):'';$('dt').className=!dealerHidden&&val(D)>21?'bust':'';
+ $('pot').textContent='';
+ if(S.stake>S.bank)S.stake=Math.floor(S.bank/10)*10;
+ const amt=phase==='play'?bet:S.stake;
+ $('stk').innerHTML=chipsFor(amt).map((s,i)=>`<div class="mc c${s}" style="bottom:${i*5}px">${lab(s)}</div>`).join('');
+ $('sv').textContent=amt?gbp(amt):'DRAG CHIPS HERE';
+ $('clr').disabled=busy||phase==='play'||!S.stake;
  const play=phase==='play'&&!busy;
  $('hit').disabled=$('stand').disabled=!play;
  $('dbl').disabled=!(play&&P.length===2&&S.bank>=bet*2);
- $('deal').disabled=busy||phase==='play'||S.bank<S.stake;
+ $('deal').disabled=busy||phase==='play'||S.stake<10||S.bank<S.stake;
  $('stakes').innerHTML='';
- for(const s of STAKES){const b=document.createElement('button');b.textContent=lab(s);
-  b.className='chip c'+s+(s===S.stake?' on':'');b.disabled=busy||phase==='play'||s>S.bank;
-  b.onclick=()=>{S.stake=s;save();ui()};$('stakes').append(b)}
+ for(const s of STAKES){const b=document.createElement('div');b.textContent=lab(s);
+  const ok=!busy&&phase!=='play'&&S.stake+s<=S.bank;
+  b.className='chip c'+s+(ok?'':' off');b.tabIndex=ok?0:-1;
+  if(ok){b.onpointerdown=e=>drag(e,s,b);b.onkeydown=e=>{if(e.key==='Enter')addBet(s)}}
+  $('stakes').append(b)}
  board();
 }
 function board(){
@@ -145,8 +168,20 @@ function board(){
  $('lb').innerHTML=rows.map(([n,v])=>`<li class="${n===me?'me':''}">${n.replace(/[<>&]/g,'')}<span>${gbp(v)}</span></li>`).join('')||'<li>No scores yet</li>';
 }
 function say(t,c){const m=$('msg');m.textContent=t;m.className=c||''}
+function chipsFor(a){const o=[];for(const s of [...STAKES].reverse())while(a>=s&&o.length<12){o.push(s);a-=s}return o}
+function addBet(s){if(busy||phase==='play'||S.stake+s>S.bank)return;S.stake+=s;save();ui()}
+function clearBet(){if(busy||phase==='play')return;S.stake=0;save();ui()}
+function drag(e,s,src){
+ e.preventDefault();
+ const g=src.cloneNode(true);g.className='chip c'+s+' ghost';document.body.append(g);
+ const hit=ev=>{const r=$('spot').getBoundingClientRect();return ev.clientX>r.left-24&&ev.clientX<r.right+24&&ev.clientY>r.top-24&&ev.clientY<r.bottom+24};
+ const mv=ev=>{g.style.left=ev.clientX-31+'px';g.style.top=ev.clientY-31+'px';$('spot').classList.toggle('over',hit(ev))};
+ const up=ev=>{window.removeEventListener('pointermove',mv);window.removeEventListener('pointerup',up);window.removeEventListener('pointercancel',up);
+  const ok=ev.type==='pointerup'&&hit(ev);$('spot').classList.remove('over');g.remove();if(ok)addBet(s)};
+ window.addEventListener('pointermove',mv);window.addEventListener('pointerup',up);window.addEventListener('pointercancel',up);mv(e);
+}
 async function deal(){
- if(busy||phase==='play'||S.bank<S.stake)return;
+ if(busy||phase==='play'||S.stake<10||S.bank<S.stake)return;
  busy=true;bet=S.stake;phase='play';P=[];D=[];$('player').innerHTML=$('dealer').innerHTML='';say('Dealing…');
  await give(P,'player');await give(D,'dealer');await give(P,'player');await give(D,'dealer',true);
  busy=false;say('Your move');ui();
@@ -172,7 +207,7 @@ function settle(){
  else{d=-bet;t='Dealer wins';c='lose'}
  S.bank+=d;S.best=Math.max(S.best,S.bank);
  if(!STAKES.some(s=>s<=S.bank)){t+=' — You are out of funds. Reset to try again.'}
- else if(S.stake>S.bank)S.stake=[...STAKES].reverse().find(s=>s<=S.bank);
+ else if(S.stake>S.bank)S.stake=Math.floor(S.bank/10)*10;
  phase='bet';bet=0;busy=false;save();say(t,c);ui();
 }
 async function hit(){
@@ -183,14 +218,14 @@ async function dbl(){
  if(phase!=='play'||busy||P.length!==2||S.bank<bet*2)return;
  bet*=2;busy=true;ui();await give(P,'player');await finish();
 }
-$('deal').onclick=deal;$('hit').onclick=hit;$('stand').onclick=()=>{if(phase==='play'&&!busy)finish()};$('dbl').onclick=dbl;
+$('deal').onclick=deal;$('clr').onclick=clearBet;$('spot').onclick=clearBet;$('hit').onclick=hit;$('stand').onclick=()=>{if(phase==='play'&&!busy)finish()};$('dbl').onclick=dbl;
 $('name').value=S.name;
 $('name').oninput=e=>{S.name=e.target.value;save();board()};
 let armed=false;
 $('reset').onclick=function(){
  if(!armed){armed=true;this.textContent='Tap again to confirm new £10 challenge';setTimeout(()=>{armed=false;this.innerHTML='Reset &amp; start new £10 challenge'},3500);return}
  armed=false;this.innerHTML='Reset &amp; start new £10 challenge';
- S.bank=START;S.best=START;S.stake=100;phase='bet';bet=0;busy=false;P=[];D=[];dealerHidden=false;
+ S.bank=START;S.best=START;S.stake=0;phase='bet';bet=0;busy=false;P=[];D=[];dealerHidden=false;
  $('player').innerHTML=$('dealer').innerHTML='';say('New £10 challenge started');save();ui();
 };
 shuffle();save();ui();
